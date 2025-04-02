@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Storage Handling</title>
+    <script>
+        function generateError() {
+            try {
+                // Intentional error: undefined function call
+                nonexistentFunction();
+            } catch (error) {
+                console.error("Error caught:", error.message);
+                storeError(error.message);
+            }
+        }
+        
+        function storeError(errorMessage) {
+            let errors = JSON.parse(localStorage.getItem("errorLogs")) || [];
+            errors.push({ message: errorMessage, timestamp: new Date().toISOString() });
+            localStorage.setItem("errorLogs", JSON.stringify(errors));
+            sessionStorage.setItem("lastError", errorMessage);
+            document.getElementById("result").innerHTML = `Error stored: ${errorMessage}`;
+        }
+
+        function showStoredErrors() {
+            let errors = JSON.parse(localStorage.getItem("errorLogs")) || [];
+            let errorList = errors.map(err => `<li>${err.timestamp} - ${err.message}</li>`).join('');
+            document.getElementById("errorLogs").innerHTML = `<ul>${errorList}</ul>`;
+        }
+    </script>
+</head>
+<body>
+    <h1>Error Storage Handling</h1>
+    <button onclick="generateError()">Generate Error</button>
+    <button onclick="showStoredErrors()">Show Stored Errors</button>
+    <p id="result"></p>
+    <div id="errorLogs"></div>
+</body>
+</html>

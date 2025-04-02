@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .photo {
+            float: left;
+            width: 100px;
+            height: 120px;
+            border: 1px solid #000;
+            margin-right: 15px;
+            background-color: #f0f0f0;
+            text-align: center;
+            line-height: 120px;
+            color: #aaa;
+        }
+        label {
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="photo">Photo</div>
+        <h2>Student Registration Form</h2>
+        <form id="studentForm">
+            <label>Student Name:</label>
+            <input type="text" id="name" required>
+            <span class="error" id="nameError"></span><br>
+            
+            <label>Registration Number:</label>
+            <input type="text" id="regNo" required>
+            <span class="error" id="regNoError"></span><br>
+            
+            <label>Mobile Number:</label>
+            <input type="text" id="mobile" required>
+            <span class="error" id="mobileError"></span><br>
+            
+            <label>Email ID:</label>
+            <input type="email" id="email" required>
+            <span class="error" id="emailError"></span><br>
+            
+            <label>Username:</label>
+            <input type="text" id="username" required>
+            <span class="error" id="usernameError"></span><br>
+            
+            <label>Password:</label>
+            <input type="password" id="password" required>
+            <span class="error" id="passwordError"></span><br>
+            
+            <label>Date of Birth:</label>
+            <input type="date" id="dob" required>
+            <span class="error" id="dobError"></span><br>
+            
+            <label>Age:</label>
+            <span id="age"></span><br>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("studentForm").addEventListener("submit", function(event) {
+            let valid = true;
+            
+            // Name validation
+            let name = document.getElementById("name").value;
+            if (!/^[A-Za-z ]+$/.test(name)) {
+                document.getElementById("nameError").innerText = "Invalid name!";
+                valid = false;
+            } else {
+                document.getElementById("nameError").innerText = "";
+            }
+            
+            // Registration Number validation
+            let regNo = document.getElementById("regNo").value;
+            if (!/^[A-Za-z0-9]+$/.test(regNo)) {
+                document.getElementById("regNoError").innerText = "Invalid registration number!";
+                valid = false;
+            } else {
+                document.getElementById("regNoError").innerText = "";
+            }
+            
+            // Mobile Number validation
+            let mobile = document.getElementById("mobile").value;
+            if (!/^[0-9]{10}$/.test(mobile)) {
+                document.getElementById("mobileError").innerText = "Invalid mobile number!";
+                valid = false;
+            } else {
+                document.getElementById("mobileError").innerText = "";
+            }
+            
+            // Username validation (no special characters)
+            let username = document.getElementById("username").value;
+            if (!/^[A-Za-z0-9]+$/.test(username)) {
+                document.getElementById("usernameError").innerText = "No special characters allowed!";
+                valid = false;
+            } else {
+                document.getElementById("usernameError").innerText = "";
+            }
+            
+            // Password validation (min 8 characters)
+            let password = document.getElementById("password").value;
+            if (password.length < 8) {
+                document.getElementById("passwordError").innerText = "Password must be at least 8 characters long!";
+                valid = false;
+            } else {
+                document.getElementById("passwordError").innerText = "";
+            }
+            
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+        
+        // Calculate Age
+        document.getElementById("dob").addEventListener("change", function() {
+            let dob = new Date(this.value);
+            let today = new Date();
+            let ageYears = today.getFullYear() - dob.getFullYear();
+            let ageMonths = today.getMonth() - dob.getMonth();
+            let ageDays = today.getDate() - dob.getDate();
+            
+            if (ageDays < 0) {
+                ageMonths--;
+                ageDays += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+            }
+            if (ageMonths < 0) {
+                ageYears--;
+                ageMonths += 12;
+            }
+            
+            document.getElementById("age").innerText = `${ageYears} years, ${ageMonths} months, ${ageDays} days`;
+        });
+    </script>
+</body>
+</html>
+ 

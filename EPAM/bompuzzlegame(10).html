@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        let timer;
+        let timeLeft = 60;
+        
+        function startGame() {
+            timeLeft = 60;
+            document.getElementById("timer").textContent = `Time Left: ${timeLeft} sec`;
+            shuffleTiles();
+            timer = setInterval(updateTimer, 1000);
+        }
+        
+        function updateTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                document.getElementById("timer").textContent = `Time Left: ${timeLeft} sec`;
+            } else {
+                clearInterval(timer);
+                alert("Time's up! You lost the game.");
+            }
+        }
+        
+        function shuffleTiles() {
+            let tiles = document.querySelectorAll(".tile");
+            let numbers = [...Array(9).keys()].sort(() => Math.random() - 0.5);
+            tiles.forEach((tile, index) => {
+                tile.textContent = numbers[index] === 0 ? "" : numbers[index];
+                tile.className = numbers[index] === 0 ? "tile empty" : "tile";
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Puzzle Game</h1>
+    <button onclick="startGame()">Start Game</button>
+    <p id="timer">Time Left: 60 sec</p>
+    <div id="puzzle">
+        <div class="tile">1</div>
+        <div class="tile">2</div>
+        <div class="tile">3</div>
+        <div class="tile">4</div>
+        <div class="tile">5</div>
+        <div class="tile">6</div>
+        <div class="tile">7</div>
+        <div class="tile">8</div>
+        <div class="tile empty"></div>
+    </div>
+</body>
+</html>

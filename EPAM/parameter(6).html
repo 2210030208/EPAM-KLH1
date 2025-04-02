@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Array Function</title>
+    <script>
+        function filterArray(arr, filterFunc) {
+            return arr.filter(filterFunc);
+        }
+
+        function applyFilter() {
+            let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            let evenNumbers = filterArray(numbers, num => num % 2 === 0);
+            document.getElementById("result").innerHTML = `Filtered Array (Even Numbers): [${evenNumbers.join(", ")}]`;
+        }
+    </script>
+</head>
+<body>
+    <h1>Filter Array Function</h1>
+    <button onclick="applyFilter()">Filter Even Numbers</button>
+    <p id="result"></p>
+</body>
+</html>
